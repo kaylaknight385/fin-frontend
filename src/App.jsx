@@ -31,14 +31,14 @@ const AppRoutes = () => {
     <Routes>
       {/*my public routes*/}
       <Route path="/login" element={!user ? <Login/> : <Navigate to="/dashboard"/> }/>
-      <Route path="/signup" element={!user ? <Signup /> : <Navigate to="dashboard"/> }/>
+      <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/dashboard"/> }/>
 
       {/*my privaaaate routes*/}
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
 
       {/*default route*/}
-      <Route path="/" element={<Navigate to="dashboard"/>} />
-      <Route path="*" element={<Navigate to="dashboard"/>} />
+      <Route path="/" element={<Navigate to="/dashboard"/>} />
+      <Route path="*" element={<Navigate to="/dashboard"/>} />
     </Routes>
   );
 }
