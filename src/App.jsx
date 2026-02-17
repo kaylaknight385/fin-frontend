@@ -8,8 +8,32 @@ import { useAuth } from './hooks/useAuth';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
+const ProtectedRoute = ({children}) => {
+  const { user, loading } = useAuth();
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className='text-center'>
+          <div className='w-16 h-16 boarder-4 boarder-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4'></div>
+              <p className='text-gray-500 font-medium'> Loading Rize Up.... </p>
+        </div>
+      </div>
+    );
+  }
+  return user ? children: <Navigate to ='/login'/>
+};
 
+const AppRoutes = () => {
+  const {user} = useAuth();
+
+  return (
+    <Routes>
+      {/*my public routes*/}
+      <Route path="/login" element={!user ? <Login/> : <Navigate to }
+    </Routes>
+  )
+}
 
 function App() {
 
