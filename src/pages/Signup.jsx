@@ -9,7 +9,7 @@ const Signup = () => {
   const { login } = useAuth();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -92,8 +92,8 @@ const Signup = () => {
               <label className="block text-gray-700 font-semibold mb-2 text-sm">Name</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
                 required
                 placeholder="Alex X"
