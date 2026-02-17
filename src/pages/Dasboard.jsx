@@ -14,7 +14,7 @@ const Dashboard = () => {
         {/* welcome banner */}
         <div className={`${colors.gradient} text-white rounded-2xl shadow-xl p-8 mb-6`}>
           <h1 className="text-3xl font-bold mb-2">Welcome back, {user?.username}! </h1>
-          <p className="text-lg opacity-90">Your AI buddy {agentName} is ready to help you manage your money</p>
+          <p className="text-lg opacity-90">Your finance buddy {agentName} is ready to help you manage your money</p>
         </div>
 
         {/* quick money stats */}
