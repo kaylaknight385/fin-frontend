@@ -161,7 +161,6 @@ const Signup = () => {
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl">{theme.emoji}</span>
                     <div>
                       <p className="font-bold text-gray-800">{theme.name}</p>
                       <p className="text-sm text-gray-500">Meet {theme.agent} - {theme.description}</p>
