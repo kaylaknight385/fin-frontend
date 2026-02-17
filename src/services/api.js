@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { loadConfigFromFile } from 'vite';
 
 const api = axios.create({
     baseURL: 'http://localhost:5000/api',
