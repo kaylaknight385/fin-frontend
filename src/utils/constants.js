@@ -39,6 +39,9 @@ export const THEMES = [
         name: 'PIXEL',
         agent: 'Pixel',
         description: 'Level up your funds with retro 8bit graphics, glowing arcade lights, and gamer energy that pops off the screen.',
-        gradient: 'from-purple-600 to-pink-600'
+        gradient: 'from-purple-600 to-pink-600',
+        background: '/src/assets/pixel-bg.gif',
+        font: 'font-04b',
+        cursor: '/src/assets/mec440.cur'
     }
 ];

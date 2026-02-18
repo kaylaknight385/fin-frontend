@@ -3,6 +3,8 @@ import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/shared/Navbar';
+import BlockRain from '../components/shared/BlockRain';
+import ShootingStar from '../components/shared/ShootingStar';
 import { getTransactions, getTransactionStats } from '../services/transactionService';
 import { getBudgets } from '../services/budgetService';
 import { getTotalCashback } from '../services/cashbackService';
@@ -57,6 +59,12 @@ const Dashboard = () => {
       className="min-h-screen relative"
       style={cursor ? { cursor: `url(${cursor}), auto` } : {}}
     >
+      {/* Shooting stars effect for Nova theme */}
+      {theme === 'cosmic' && <ShootingStar />}
+      
+      {/* Block rain effect for Pixel theme */}
+      {theme === 'neon' && <BlockRain />}
+      
       {/* background image for Nova theme */}
       {background && (
         <div 
