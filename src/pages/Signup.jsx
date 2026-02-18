@@ -168,8 +168,8 @@ const Signup = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* theme preview  */}
             <div className={`bg-gradient-to-br ${currentThemePreview.gradient} text-white rounded-xl p-6 mb-4 transition-all duration-500 ${currentThemePreview.font || ''} relative overflow-hidden`}>
-              {/* Background for Nova theme */}
-              {currentThemePreview.id === 'cosmic' && currentThemePreview.background && (
+              {/* Background image for all themes */}
+              {currentThemePreview.background && (
                 <div 
                   className="absolute inset-0 opacity-30"
                   style={{

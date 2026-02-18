@@ -39,7 +39,7 @@
 
 .font-tropi-land {
   font-family: 'Tropi Land', cursive;
-  font-size: 1.5rem; /* */
+  font-size: 1.8rem; /* Increased from 1.5rem for better readability */
 }
 
 .font-04b {
@@ -76,4 +76,4 @@
   animation: gradient-rotate 3s ease infinite;
 }
 
-/* custom styles here */
+
