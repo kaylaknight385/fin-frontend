@@ -27,6 +27,6 @@ export const deleteTransaction = async (id) => {
 };
 
 export const getTransactionStats = async () => {
-    const response = await api.get('/transaction/stats');
+    const response = await api.get('/transactions/stats');
     return response.data;
 };
