@@ -1,1 +1,13 @@
+/* Custom font */
+@font-face {
+  font-family: 'Play Pretend';
+  src: url('./assets/Play Pretend.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-play-pretend {
+  font-family: 'Play Pretend', cursive;
+}
+
 /* custom styles here */

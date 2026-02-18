@@ -49,7 +49,7 @@ const Login = () => {
       <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative z-10">
         {/* page header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-purple-600 mb-2">Rize Up</h1>
+          <h1 className="text-4xl font-bold text-purple-600 mb-2 font-play-pretend">Rize Up</h1>
           <p className="text-gray-600">Welcome back! Let's check that bag!</p>
         </div>
 

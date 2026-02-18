@@ -26,7 +26,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* my logo heeere */}
           <Link to="/dashboard">
-            <h1 className={`text-2xl font-bold ${colors.text}`}>
+            <h1 className={`text-2xl font-bold ${colors.text} font-play-pretend`}>
               Rize Up 
             </h1>
           </Link>

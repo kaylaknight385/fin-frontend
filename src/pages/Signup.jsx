@@ -72,7 +72,7 @@ const Signup = () => {
       <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative z-10">
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-purple-600 mb-2">Rize Up</h1>
+          <h1 className="text-4xl font-bold text-purple-600 mb-2 font-play-pretend">Rize Up</h1>
           <p className="text-gray-600">
             {step === 1 ? 'Create your account' : 'Pick your vibe '}
           </p>
