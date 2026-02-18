@@ -6,13 +6,13 @@ export const getBudget = async (filters = {}) => {
     return response.data;
 };
 
-export const getBudgets = async (id) => {
-    const response = await api.get(`/budgets/${id}`);
+export const getBudgets = async () => {
+    const response = await api.get('/budgets');
     return response.data;
 };
 
 export const createBudget = async (budgetData) => {
-    const response = await api.post('/budgets'. budgetData);
+    const response = await api.post('/budgets', budgetData);
     return response.data;
 };
 

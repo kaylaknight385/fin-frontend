@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/shared/Navbar';
 import BlockRain from '../components/shared/BlockRain';
 import ShootingStar from '../components/shared/ShootingStar';
+import LoveHeartCursor from '../components/shared/LoveHeartCursor';
+import SparklesCursor from '../components/shared/SparklesCursor';
 import { getTransactions, getTransactionStats } from '../services/transactionService';
 import { getBudgets } from '../services/budgetService';
 import { getTotalCashback } from '../services/cashbackService';
@@ -61,6 +63,12 @@ const Dashboard = () => {
     >
       {/* Shooting stars effect for Nova theme */}
       {theme === 'cosmic' && <ShootingStar />}
+      
+      {/* Sparkles cursor effect for Nova theme */}
+      {theme === 'cosmic' && <SparklesCursor />}
+      
+      {/* Love heart cursor effect for Bloom theme */}
+      {theme === 'garden' && <LoveHeartCursor />}
       
       {/* Block rain effect for Pixel theme */}
       {theme === 'neon' && <BlockRain />}

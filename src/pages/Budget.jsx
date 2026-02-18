@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 import Navbar from '../components/shared/Navbar';
 import Popup from '../components/shared/Popup';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
-import { getBudgets, createBudget, deleteBudget } from '../services/budgetService';
+import BlockRain from '../components/shared/BlockRain';
+import ShootingStar from '../components/shared/ShootingStar';
+import LoveHeartCursor from '../components/shared/LoveHeartCursor';
+import SparklesCursor from '../components/shared/SparklesCursor';
+import { getBudgets, createBudget, updateBudget, deleteBudget } from '../services/budgetService';
 import { CATEGORIES } from '../utils/constants';
 import { formatCurrency } from '../utils/formatCurrency';
 import { useTheme } from '../hooks/useTheme';
 
 const Budgets = () => {
-  const { colors } = useTheme();
+  const { colors, theme, background, font, cursor } = useTheme();
   const [budgets, setBudgets] = useState([]);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     category: 'food',
     limit: ''
@@ -37,17 +42,40 @@ const Budgets = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createBudget({
+      const budgetData = {
         ...formData,
         limit: parseFloat(formData.limit),
         month: new Date().toISOString().slice(0, 7)
-      });
-      setIsModalOpen(false);
+      };
+      
+      if (editingId) {
+        await updateBudget(editingId, budgetData);
+      } else {
+        await createBudget(budgetData);
+      }
+      
+      setIsPopupOpen(false);
+      setEditingId(null);
       setFormData({ category: 'food', limit: '' });
       fetchBudgets();
     } catch (error) {
-      alert(error.response?.data?.error || 'Error creating budget');
+      alert(error.response?.data?.error || 'Error saving budget');
     }
+  };
+
+  const handleEdit = (budget) => {
+    setEditingId(budget._id);
+    setFormData({
+      category: budget.category,
+      limit: budget.limit.toString()
+    });
+    setIsPopupOpen(true);
+  };
+
+  const handleAdd = () => {
+    setEditingId(null);
+    setFormData({ category: 'food', limit: '' });
+    setIsPopupOpen(true);
   };
 
   const handleDelete = async (id) => {
@@ -62,15 +90,44 @@ const Budgets = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <div 
+      className="min-h-screen relative"
+      style={cursor ? { cursor: `url(${cursor}), auto` } : {}}
+    >
+      {/* Shooting stars effect for Nova theme */}
+      {theme === 'cosmic' && <ShootingStar />}
       
-      <div className="max-w-7xl mx-auto p-6">
+      {/* Sparkles cursor effect for Nova theme */}
+      {theme === 'cosmic' && <SparklesCursor />}
+      
+      {/* Love heart cursor effect for Bloom theme */}
+      {theme === 'garden' && <LoveHeartCursor />}
+      
+      {/* Block rain effect for Pixel theme */}
+      {theme === 'neon' && <BlockRain />}
+      
+      {/* background image */}
+      {background && (
+        <div 
+          className="fixed inset-0 z-0"
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+      )}
+      
+      <div className="relative z-10">
+        <Navbar />
+      
+      <div className={`max-w-7xl mx-auto p-6 ${font || ''}`}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Budgets</h1>
+          <h1 className={`text-3xl font-bold ${colors.cardText}`}>Budgets</h1>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleAdd}
             className={`${colors.primary} text-white px-6 py-3 rounded-lg font-semibold ${colors.hover} transition-all`}
           >
             + Create Budget
@@ -79,27 +136,27 @@ const Budgets = () => {
 
         {/* summary */}
         {summary && (
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-md p-6 mb-6`}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Total Budget</p>
-                <p className="text-2xl font-bold text-gray-800">{formatCurrency(summary.totalLimit)}</p>
+                <p className={`text-sm ${colors.cardText} opacity-70 mb-1`}>Total Budget</p>
+                <p className={`text-2xl font-bold ${colors.cardText}`}>{formatCurrency(summary.totalLimit)}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500 mb-1">Spent</p>
-                <p className="text-2xl font-bold text-red-600">{formatCurrency(summary.totalSpent)}</p>
+                <p className={`text-sm ${colors.cardText} opacity-70 mb-1`}>Spent</p>
+                <p className="text-2xl font-bold text-red-400">{formatCurrency(summary.totalSpent)}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500 mb-1">Remaining</p>
-                <p className="text-2xl font-bold text-green-600">{formatCurrency(summary.remaining)}</p>
+                <p className={`text-sm ${colors.cardText} opacity-70 mb-1`}>Remaining</p>
+                <p className="text-2xl font-bold text-green-400">{formatCurrency(summary.remaining)}</p>
               </div>
             </div>
             <div className="mt-4">
-              <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-gray-600">Overall Progress</span>
-                <span className="font-semibold text-gray-800">{summary.percentUsed}%</span>
+              <div className={`flex items-center justify-between text-sm mb-2`}>
+                <span className={`${colors.cardText} opacity-70`}>Overall Progress</span>
+                <span className={`font-semibold ${colors.cardText}`}>{summary.percentUsed}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
+              <div className="w-full bg-white/10 rounded-full h-3">
                 <div
                   className={`h-3 rounded-full ${summary.percentUsed > 90 ? 'bg-red-500' : summary.percentUsed > 75 ? 'bg-yellow-500' : 'bg-green-500'}`}
                   style={{ width: `${Math.min(summary.percentUsed, 100)}%` }}
@@ -113,9 +170,9 @@ const Budgets = () => {
         {loading ? (
           <LoadingSpinner />
         ) : budgets.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-md p-12 text-center text-gray-500">
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-md p-12 text-center ${colors.cardText}`}>
             <p className="text-lg">No budgets yet</p>
-            <p className="text-sm">Create your first budget to track spending!</p>
+            <p className="text-sm opacity-70">Create your first budget to track spending!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -124,28 +181,38 @@ const Budgets = () => {
               const categoryInfo = CATEGORIES.find(c => c.value === budget.category);
               
               return (
-                <div key={budget._id} className="bg-white rounded-xl shadow-md p-6">
+                <div key={budget._id} className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-md p-6`}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div>
-                        <p className="font-bold text-gray-800">{categoryInfo?.label || budget.category}</p>
-                        <p className="text-sm text-gray-500">{formatCurrency(budget.spent)} of {formatCurrency(budget.limit)}</p>
+                        <p className={`font-bold ${colors.cardText}`}>{categoryInfo?.label || budget.category}</p>
+                        <p className={`text-sm ${colors.cardText} opacity-70`}>{formatCurrency(budget.spent)} of {formatCurrency(budget.limit)}</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => handleDelete(budget._id)}
-                      className="text-red-500 hover:text-red-700 transition-all"
-                    >
-                      🗑️
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(budget)}
+                        className="text-blue-400 hover:text-blue-600 transition-all text-xl"
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => handleDelete(budget._id)}
+                        className="text-red-500 hover:text-red-700 transition-all"
+                        title="Delete"
+                      >
+                        🗑️
+                      </button>
+                    </div>
                   </div>
                   
                   <div className="mb-2">
                     <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-gray-600">Progress</span>
-                      <span className="font-semibold text-gray-800">{percent}%</span>
+                      <span className={`${colors.cardText} opacity-70`}>Progress</span>
+                      <span className={`font-semibold ${colors.cardText}`}>{percent}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-white/10 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full ${percent > 90 ? 'bg-red-500' : percent > 75 ? 'bg-yellow-500' : 'bg-green-500'}`}
                         style={{ width: `${Math.min(percent, 100)}%` }}
@@ -153,7 +220,7 @@ const Budgets = () => {
                     </div>
                   </div>
                   
-                  <p className="text-sm text-gray-500 mt-3">
+                  <p className={`text-sm ${colors.cardText} opacity-70 mt-3`}>
                     {formatCurrency(budget.limit - budget.spent)} remaining
                   </p>
                 </div>
@@ -163,8 +230,8 @@ const Budgets = () => {
         )}
       </div>
 
-      {/* create a budget Popup */}
-      <Popup isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Create Budget">
+      {/* create/edit budget Popup */}
+      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} title={editingId ? "Edit Budget" : "Create Budget"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
@@ -206,11 +273,12 @@ const Budgets = () => {
               type="submit"
               className={`flex-1 ${colors.primary} text-white py-3 rounded-lg font-semibold ${colors.hover}`}
             >
-              Create Budget
+              {editingId ? 'Update Budget' : 'Create Budget'}
             </button>
           </div>
         </form>
       </Popup>
+      </div>
     </div>
   );
 };

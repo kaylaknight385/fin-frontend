@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 import Navbar from '../components/shared/Navbar';
 import Popup from '../components/shared/Popup';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
-import { getTransactions, createTransaction, deleteTransaction } from '../services/transactionService';
+import BlockRain from '../components/shared/BlockRain';
+import ShootingStar from '../components/shared/ShootingStar';
+import LoveHeartCursor from '../components/shared/LoveHeartCursor';
+import SparklesCursor from '../components/shared/SparklesCursor';
+import { getTransactions, createTransaction, updateTransaction, deleteTransaction } from '../services/transactionService';
 import { CATEGORIES } from '../utils/constants';
 import { formatCurrency } from '../utils/formatCurrency';
 import { formatDate } from '../utils/formatDate';
 import { useTheme } from '../hooks/useTheme';
 
 const Transactions = () => {
-  const { colors } = useTheme();
+  const { colors, theme, background, font, cursor } = useTheme();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     description: '',
     amount: '',
@@ -39,11 +44,19 @@ const Transactions = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createTransaction({
+      const transactionData = {
         ...formData,
         amount: parseFloat(formData.amount)
-      });
-      setIsModalOpen(false);
+      };
+      
+      if (editingId) {
+        await updateTransaction(editingId, transactionData);
+      } else {
+        await createTransaction(transactionData);
+      }
+      
+      setIsPopupOpen(false);
+      setEditingId(null);
       setFormData({
         description: '',
         amount: '',
@@ -53,8 +66,34 @@ const Transactions = () => {
       });
       fetchTransactions();
     } catch (error) {
-      console.error('Error creating transaction:', error);
+      console.error('Error saving transaction:', error);
+      console.error('Backend error:', error.response?.data);
+      alert(error.response?.data?.error || 'Error saving transaction');
     }
+  };
+
+  const handleEdit = (transaction) => {
+    setEditingId(transaction._id);
+    setFormData({
+      description: transaction.description,
+      amount: transaction.amount.toString(),
+      type: transaction.type,
+      category: transaction.category,
+      date: new Date(transaction.date).toISOString().split('T')[0]
+    });
+    setIsPopupOpen(true);
+  };
+
+  const handleAdd = () => {
+    setEditingId(null);
+    setFormData({
+      description: '',
+      amount: '',
+      type: 'expense',
+      category: 'food',
+      date: new Date().toISOString().split('T')[0]
+    });
+    setIsPopupOpen(true);
   };
 
   const handleDelete = async (id) => {
@@ -69,15 +108,44 @@ const Transactions = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <div 
+      className="min-h-screen relative"
+      style={cursor ? { cursor: `url(${cursor}), auto` } : {}}
+    >
+      {/* shooting stars effect for Nova theme */}
+      {theme === 'cosmic' && <ShootingStar />}
       
-      <div className="max-w-7xl mx-auto p-6">
+      {/* sparkles cursor effect for Nova theme */}
+      {theme === 'cosmic' && <SparklesCursor />}
+      
+      {/* flower cursor effect for Bloom theme */}
+      {theme === 'garden' && <LoveHeartCursor />}
+      
+      {/* block rain effect for Pixel theme */}
+      {theme === 'neon' && <BlockRain />}
+      
+      {/* background image */}
+      {background && (
+        <div 
+          className="fixed inset-0 z-0"
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+      )}
+      
+      <div className="relative z-10">
+        <Navbar />
+      
+      <div className={`max-w-7xl mx-auto p-6 ${font || ''}`}>
         {/* page header */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Transactions</h1>
+          <h1 className={`text-white-3xl font-bold`}>Transactions</h1>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleAdd}
             className={`${colors.primary} text-white px-6 py-3 rounded-lg font-semibold ${colors.hover} transition-all`}
           >
             + Add Transaction
@@ -85,37 +153,44 @@ const Transactions = () => {
         </div>
 
         {/* my transactions list */}
-        <div className="bg-white rounded-xl shadow-md">
+        <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-md`}>
           {loading ? (
             <LoadingSpinner />
           ) : transactions.length === 0 ? (
-            <div className="p-12 text-center text-gray-500">
-              <p className="text-5xl mb-4">💸</p>
+            <div className={`p-12 text-center ${colors.cardText}`}>
               <p className="text-lg">No transactions yet</p>
-              <p className="text-sm">Add your first transaction to get started!</p>
+              <p className="text-sm opacity-70">Add your first transaction to get started!</p>
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-white/10">
               {transactions.map((transaction) => (
-                <div key={transaction._id} className="p-4 hover:bg-gray-50 transition-all flex items-center justify-between">
+                <div key={transaction._id} className="p-4 hover:bg-white/5 transition-all flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-2xl">
-                      {CATEGORIES.find(c => c.value === transaction.category)}
+                    <div className={`w-12 h-12 ${colors.primary} rounded-full flex items-center justify-center text-2xl`}>
+                      {CATEGORIES.find(c => c.value === transaction.category)?.emoji}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">{transaction.description}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className={`font-semibold ${colors.cardText}`}>{transaction.description}</p>
+                      <p className={`text-sm ${colors.cardText} opacity-70`}>
                         {CATEGORIES.find(c => c.value === transaction.category)?.label} • {formatDate(transaction.date)}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <p className={`text-xl font-bold ${transaction.type === 'income' ? 'text-green-600' : 'text-gray-800'}`}>
+                    <p className={`text-xl font-bold ${transaction.type === 'income' ? 'text-green-400' : colors.cardText}`}>
                       {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
                     </p>
                     <button
+                      onClick={() => handleEdit(transaction)}
+                      className="text-blue-400 hover:text-blue-600 transition-all text-xl"
+                      title="Edit"
+                    >
+                      ✏️
+                    </button>
+                    <button
                       onClick={() => handleDelete(transaction._id)}
                       className="text-red-500 hover:text-red-700 transition-all"
+                      title="Delete"
                     >
                       🗑️
                     </button>
@@ -127,8 +202,8 @@ const Transactions = () => {
         </div>
       </div>
 
-      {/* add transaction Popup */}
-      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} title="Add Transaction">
+      {/* add/edit transaction Popup */}
+      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} title={editingId ? "Edit Transaction" : "Add Transaction"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
@@ -211,7 +286,7 @@ const Transactions = () => {
           <div className="flex gap-3 pt-4">
             <button
               type="button"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => setIsPopupOpen(false)}
               className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300"
             >
               Cancel
@@ -220,11 +295,12 @@ const Transactions = () => {
               type="submit"
               className={`flex-1 ${colors.primary} text-white py-3 rounded-lg font-semibold ${colors.hover}`}
             >
-              Add Transaction
+              {editingId ? 'Update Transaction' : 'Add Transaction'}
             </button>
           </div>
         </form>
       </Popup>
+      </div>
     </div>
   );
 };

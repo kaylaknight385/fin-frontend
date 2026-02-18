@@ -7,6 +7,9 @@ import { useAuth } from './hooks/useAuth';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dasboard';
+import Transactions from './pages/Transactions';
+import Budget from './pages/Budget';
+import Cashback from './pages/Cashback';
 
 const ProtectedRoute = ({children}) => {
   const { user, loading } = useAuth();
@@ -35,6 +38,9 @@ const AppRoutes = () => {
 
       {/*my privaaaate routes*/}
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
+      <Route path="/transactions" element={<ProtectedRoute><Transactions/></ProtectedRoute>} />
+      <Route path="/budgets" element={<ProtectedRoute><Budget/></ProtectedRoute>} />
+      <Route path="/cashback" element={<ProtectedRoute><Cashback/></ProtectedRoute>} />
 
       {/*default route*/}
       <Route path="/" element={<Navigate to="/dashboard"/>} />
