@@ -9,7 +9,7 @@ const Signup = () => {
   const { login } = useAuth();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -110,8 +110,8 @@ const Signup = () => {
               <label className="block text-gray-700 font-semibold mb-2 text-sm">Name</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
                 required
                 placeholder="Name here..."
@@ -181,9 +181,9 @@ const Signup = () => {
               {/* lil AI message */}
               <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20">
                 <p className="text-sm font-medium">
-                  {currentThemePreview.id === 'cosmic' && "yo star child! ready to make your money orbit perfectly? let's get this cosmic cash flowing!"}
-                  {currentThemePreview.id === 'garden' && "hey sprout! let's grow your money tree together. time to plant some financial seeds!"}
-                  {currentThemePreview.id === 'neon' && "what's up player! ready to level up your finances? let's unlock those money achievements!"}
+                  {currentThemePreview.id === 'cosmic' && "Hi star child! Ready to make your money orbit perfectly? Let's get this cosmic cash flowing!"}
+                  {currentThemePreview.id === 'garden' && "Hey sprout! Let's grow your money tree together. Time to plant some financial seeds!"}
+                  {currentThemePreview.id === 'neon' && "What's up player! Ready to level up your finances? Let's unlock those money achievements!"}
                 </p>
               </div>
 
