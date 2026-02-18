@@ -10,6 +10,7 @@ import Dashboard from './pages/Dasboard';
 import Transactions from './pages/Transactions';
 import Budget from './pages/Budget';
 import Cashback from './pages/Cashback';
+import AIChat from './pages/AIChat';
 
 const ProtectedRoute = ({children}) => {
   const { user, loading } = useAuth();
@@ -41,6 +42,7 @@ const AppRoutes = () => {
       <Route path="/transactions" element={<ProtectedRoute><Transactions/></ProtectedRoute>} />
       <Route path="/budgets" element={<ProtectedRoute><Budget/></ProtectedRoute>} />
       <Route path="/cashback" element={<ProtectedRoute><Cashback/></ProtectedRoute>} />
+      <Route path="/ai-chat" element={<ProtectedRoute><AIChat/></ProtectedRoute>} />
 
       {/*default route*/}
       <Route path="/" element={<Navigate to="/dashboard"/>} />
