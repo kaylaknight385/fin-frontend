@@ -114,7 +114,7 @@ const Signup = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                placeholder="Alex Chen"
+                placeholder="Name here..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
               />
             </div>
@@ -126,7 +126,7 @@ const Signup = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                placeholder="alex@example.com"
+                placeholder="user@example.com"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
               />
             </div>
