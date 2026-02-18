@@ -53,8 +53,23 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-600 px-4 py-12">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 py-12">
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      >
+        <source src="/src/assets/RizeUp-bg.mp4" type="video/mp4" />
+      </video>
+      
+      {/* Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black/40"></div>
+      
+      {/* Content */}
+      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative z-10">
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-4xl font-bold text-purple-600 mb-2">Rize Up</h1>
