@@ -12,7 +12,8 @@ const themeColors = {
         text: 'text-indigo-600',
         border: 'border-indigo-500',
         hover: 'hover:bg-indigo-800',
-        cardBg: 'bg-indigo-900/40'
+        cardBg: 'bg-gradient-to-br from-indigo-950 via-purple-900 to-blue-950',
+        cardText: 'text-white'
   },
   garden: {
     primary: 'bg-green-500',
@@ -22,7 +23,8 @@ const themeColors = {
     text: 'text-green-600',
     border: 'border-green-500',
     hover: 'hover:bg-green-600',
-    cardBg: 'bg-pink-100/80'
+    cardBg: 'bg-pink-300/95',
+    cardText: 'text-green-800'
   },
   neon: {
     primary: 'bg-pink-500',
@@ -32,7 +34,8 @@ const themeColors = {
     text: 'text-pink-600',
     border: 'border-pink-500',
     hover: 'hover:bg-pink-600',
-    cardBg: 'bg-pink-100/90'
+    cardBg: 'bg-pink-100/90',
+    cardText: 'text-gray-800'
   }
 };
 

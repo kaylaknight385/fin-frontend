@@ -56,4 +56,12 @@
   animation: gradient-rotate 3s ease infinite;
 }
 
+.nova-border {
+  border: 2px solid transparent;
+  background: linear-gradient(#312e81, #312e81) padding-box,
+              linear-gradient(90deg, #d4af37, #b8960f, #d4af37) border-box;
+  background-size: 200% 200%;
+  animation: gradient-rotate 3s ease infinite;
+}
+
 /* custom styles here */

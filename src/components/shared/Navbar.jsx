@@ -4,7 +4,7 @@ import { useTheme } from '../../hooks/useTheme';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  const { colors, agentName, font } = useTheme();
+  const { colors, agentName, font, theme } = useTheme();
   const location = useLocation();
 
   const handleLogout = () => {
@@ -21,7 +21,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`${colors.gradient} shadow-lg sticky top-0 z-50 backdrop-blur-md bg-opacity-95`}>
+    <nav 
+      className={`${colors.gradient} shadow-lg sticky top-0 z-50 backdrop-blur-md bg-opacity-95`}
+      style={theme === 'cosmic' ? { 
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 -2px 8px rgba(212, 175, 55, 0.3)',
+        borderBottom: '1px solid rgba(212, 175, 55, 0.3)'
+      } : {}}
+    >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* my logo heeere */}

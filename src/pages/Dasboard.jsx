@@ -50,7 +50,7 @@ const Dashboard = () => {
   };
 
   // Border class for cards - animated for Bloom theme
-  const cardBorder = theme === 'garden' ? 'bloom-border' : 'border border-white/10';
+  const cardBorder = theme === 'garden' ? 'bloom-border' : theme === 'cosmic' ? 'nova-border' : 'border border-white/10';
 
   return (
     <div 
@@ -101,8 +101,8 @@ const Dashboard = () => {
 
         {/* welcome banner */}
         <div className={`${colors.gradient} text-white rounded-2xl shadow-xl p-8 mb-6 transition-all duration-500 ${font || ''} backdrop-blur-sm`}>
-          <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.username}!</h1>
-          <p className="text-lg opacity-90">{agentName} is here to help you Rize Up!</p>
+          <h1 className="text-5xl font-bold mb-2">Welcome back, {user?.username}!</h1>
+          <p className="text-4lg opacity-90">{agentName} is here to help you Rize Up!</p>
         </div>
 
         {/* stats */}
@@ -110,52 +110,52 @@ const Dashboard = () => {
           {/* ur balaance */}
           <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 hover:shadow-xl transition-all ${cardBorder}`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-200 font-medium">Balance</p>
+              <p className={`text-sm ${colors.cardText} font-medium`}>Balance</p>
               <div className={`w-10 h-10 ${colors.primary} rounded-full flex items-center justify-center text-white font-bold`}>
                 $
               </div>
             </div>
-            <p className="text-3xl font-bold text-white">{formatCurrency(user?.balance || 0)}</p>
-            <p className="text-xs text-gray-300 mt-1">Available to spend</p>
+            <p className={`text-3xl font-bold ${colors.cardText}`}>{formatCurrency(user?.balance || 0)}</p>
+            <p className={`text-xs ${colors.cardText} opacity-70 mt-1`}>Available to spend</p>
           </div>
 
           {/* monthly spending */}
           <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 hover:shadow-xl transition-all ${cardBorder}`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-200 font-medium">This Month</p>
+              <p className={`text-sm ${colors.cardText} font-medium`}>This Month</p>
               <div className="w-10 h-10 bg-red-500/80 rounded-full flex items-center justify-center text-white font-bold">
                 -
               </div>
             </div>
-            <p className="text-3xl font-bold text-white">
+            <p className={`text-3xl font-bold ${colors.cardText}`}>
               {stats ? formatCurrency(stats.totalExpenses) : formatCurrency(0)}
             </p>
-            <p className="text-xs text-gray-300 mt-1">Total expenses</p>
+            <p className={`text-xs ${colors.cardText} opacity-70 mt-1`}>Total expenses</p>
           </div>
 
           {/* ur earned cashback */}
           <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 hover:shadow-xl transition-all ${cardBorder}`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-200 font-medium">Cashback</p>
+              <p className={`text-sm ${colors.cardText} font-medium`}>Cashback</p>
               <div className="w-10 h-10 bg-green-500/80 rounded-full flex items-center justify-center text-white font-bold">
                 +
               </div>
             </div>
-            <p className="text-3xl font-bold text-green-400">{formatCurrency(cashbackTotal)}</p>
-            <p className="text-xs text-gray-300 mt-1">Earned this month</p>
+            <p className={`text-3xl font-bold ${theme === 'garden' ? colors.cardText : 'text-green-400'}`}>{formatCurrency(cashbackTotal)}</p>
+            <p className={`text-xs ${colors.cardText} opacity-70 mt-1`}>Earned this month</p>
           </div>
         </div>
 
-        {/* Budget Overview & Stocks Grid */}
+        {/* budget & stocks Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Budget Overview */}
+          {/* budget overview */}
           <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 ${cardBorder}`}>
-            <h2 className="text-xl font-bold text-white mb-4">Budget Overview</h2>
+            <h2 className={`text-xl font-bold ${colors.cardText} mb-4`}>Budget Overview</h2>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-200">Food & Dining</span>
-                  <span className="text-sm text-gray-300">$320 / $500</span>
+                  <span className={`text-sm ${colors.cardText}`}>Food & Dining</span>
+                  <span className={`text-sm ${colors.cardText} opacity-80`}>$320 / $500</span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-2">
                   <div className={`${colors.primary} h-2 rounded-full`} style={{ width: '64%' }}></div>
@@ -163,8 +163,8 @@ const Dashboard = () => {
               </div>
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-200">Entertainment</span>
-                  <span className="text-sm text-gray-300">$150 / $200</span>
+                  <span className={`text-sm ${colors.cardText}`}>Entertainment</span>
+                  <span className={`text-sm ${colors.cardText} opacity-80`}>$150 / $200</span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-2">
                   <div className={`${colors.primary} h-2 rounded-full`} style={{ width: '75%' }}></div>
@@ -172,8 +172,8 @@ const Dashboard = () => {
               </div>
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-200">Shopping</span>
-                  <span className="text-sm text-gray-300">$280 / $400</span>
+                  <span className={`text-sm ${colors.cardText}`}>Shopping</span>
+                  <span className={`text-sm ${colors.cardText} opacity-80`}>$280 / $400</span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-2">
                   <div className={`${colors.primary} h-2 rounded-full`} style={{ width: '70%' }}></div>
@@ -182,15 +182,15 @@ const Dashboard = () => {
             </div>
             <button
               onClick={() => navigate('/budgets')}
-              className="mt-4 w-full bg-white/10 hover:bg-white/20 text-white py-2 rounded-lg transition-all text-sm font-medium"
+              className={`mt-4 w-full bg-white/10 hover:bg-white/20 ${colors.cardText} py-2 rounded-lg transition-all text-sm font-medium`}
             >
               View All Budgets
             </button>
           </div>
 
-          {/* Stocks Watchlist */}
+          {/* Stocks */}
           <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 ${cardBorder}`}>
-            <h2 className="text-xl font-bold text-white mb-4">Stocks Watchlist</h2>
+            <h2 className={`text-xl font-bold ${colors.cardText} mb-4`}>Stocks Watchlist</h2>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
                 <div className="flex items-center gap-3">
@@ -198,13 +198,13 @@ const Dashboard = () => {
                     AAPL
                   </div>
                   <div>
-                    <p className="text-white font-semibold text-sm">Apple Inc.</p>
-                    <p className="text-gray-300 text-xs">$178.45</p>
+                    <p className={`${colors.cardText} font-semibold text-sm`}>Apple Inc.</p>
+                    <p className={`${colors.cardText} opacity-70 text-xs`}>$178.45</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-green-400 font-bold text-sm">+2.3%</p>
-                  <p className="text-gray-300 text-xs">+$4.12</p>
+                  <p className={`${colors.cardText} opacity-70 text-xs`}>+$4.12</p>
                 </div>
               </div>
               <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
@@ -213,13 +213,13 @@ const Dashboard = () => {
                     TSLA
                   </div>
                   <div>
-                    <p className="text-white font-semibold text-sm">Tesla Inc.</p>
-                    <p className="text-gray-300 text-xs">$245.67</p>
+                    <p className={`${colors.cardText} font-semibold text-sm`}>Tesla Inc.</p>
+                    <p className={`${colors.cardText} opacity-70 text-xs`}>$245.67</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-red-400 font-bold text-sm">-1.2%</p>
-                  <p className="text-gray-300 text-xs">-$2.98</p>
+                  <p className={`${colors.cardText} opacity-70 text-xs`}>-$2.98</p>
                 </div>
               </div>
               <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
@@ -228,18 +228,18 @@ const Dashboard = () => {
                     BTC
                   </div>
                   <div>
-                    <p className="text-white font-semibold text-sm">Bitcoin</p>
-                    <p className="text-gray-300 text-xs">$43,250</p>
+                    <p className={`${colors.cardText} font-semibold text-sm`}>Bitcoin</p>
+                    <p className={`${colors.cardText} opacity-70 text-xs`}>$43,250</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-green-400 font-bold text-sm">+5.7%</p>
-                  <p className="text-gray-300 text-xs">+$2,340</p>
+                  <p className={`${colors.cardText} opacity-70 text-xs`}>+$2,340</p>
                 </div>
               </div>
             </div>
             <button
-              className="mt-4 w-full bg-white/10 hover:bg-white/20 text-white py-2 rounded-lg transition-all text-sm font-medium"
+              className={`mt-4 w-full bg-white/10 hover:bg-white/20 ${colors.cardText} py-2 rounded-lg transition-all text-sm font-medium`}
             >
               Manage Watchlist
             </button>
@@ -250,7 +250,7 @@ const Dashboard = () => {
         {recentTransactions.length > 0 && (
           <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 ${cardBorder}`}>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-white">Recent Activity</h2>
+              <h2 className={`text-xl font-bold ${colors.cardText}`}>Recent Activity</h2>
               <button
                 onClick={() => navigate('/transactions')}
                 className={`${colors.text} hover:underline text-sm font-semibold`}
