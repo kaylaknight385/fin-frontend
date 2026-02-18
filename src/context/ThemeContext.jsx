@@ -1,16 +1,18 @@
 import { createContext, useState, useEffect } from "react";
+import { THEMES } from "../utils/constants";
 
 export const ThemeContext = createContext();
 
 const themeColors = {
     cosmic: {
-        primary: 'bg-purple-600',
-        secondary: 'bg-black-600',
-        accent: 'bg-gold-500',
-        gradient: 'bg-gradient-to-br from-purple-600 to-blue-600',
-        text: 'text-purple-600',
-        border: 'border-purple-500',
-        hover: 'hover:bg-purple-700'
+        primary: 'bg-indigo-900',
+        secondary: 'bg-purple-900',
+        accent: 'bg-amber-400',
+        gradient: 'bg-gradient-to-br from-indigo-950 via-purple-900 to-blue-950',
+        text: 'text-indigo-600',
+        border: 'border-indigo-500',
+        hover: 'hover:bg-indigo-800',
+        cardBg: 'bg-indigo-900/40'
   },
   garden: {
     primary: 'bg-green-500',
@@ -19,7 +21,8 @@ const themeColors = {
     gradient: 'bg-gradient-to-br from-green-500 to-lime-500',
     text: 'text-green-600',
     border: 'border-green-500',
-    hover: 'hover:bg-green-600'
+    hover: 'hover:bg-green-600',
+    cardBg: 'bg-pink-100/80'
   },
   neon: {
     primary: 'bg-pink-500',
@@ -28,7 +31,8 @@ const themeColors = {
     gradient: 'bg-gradient-to-br from-pink-500 to-purple-600',
     text: 'text-pink-600',
     border: 'border-pink-500',
-    hover: 'hover:bg-pink-600'
+    hover: 'hover:bg-pink-600',
+    cardBg: 'bg-pink-100/90'
   }
 };
 
@@ -56,11 +60,17 @@ export const ThemeProvider = ({ children }) => {
     setCurrentTheme(theme);
   };
 
+  // Get current theme config from THEMES
+  const currentThemeConfig = THEMES.find(t => t.id === currentTheme) || THEMES[0];
+
   const value = {
     theme: currentTheme,
     changeTheme,
     colors: themeColors[currentTheme],
-    agentName: agentNames[currentTheme]
+    agentName: agentNames[currentTheme],
+    background: currentThemeConfig.background,
+    font: currentThemeConfig.font,
+    cursor: currentThemeConfig.cursor
   };
 
   return (

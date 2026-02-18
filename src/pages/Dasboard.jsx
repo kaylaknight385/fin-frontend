@@ -12,7 +12,7 @@ import { THEMES } from '../utils/constants';
 
 const Dashboard = () => {
   const { user, updateUser } = useAuth();
-  const { theme, colors, agentName, changeTheme } = useTheme();
+  const { theme, colors, agentName, changeTheme, background, font, cursor } = useTheme();
   const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [recentTransactions, setRecentTransactions] = useState([]);
@@ -41,7 +41,7 @@ const Dashboard = () => {
     }
   };
 
-  // Theme change
+  // theme change
   const handleThemeChange = (newTheme) => {
     changeTheme(newTheme);
     // update user object in localStorage here
@@ -49,13 +49,33 @@ const Dashboard = () => {
     updateUser(updatedUser);
   };
 
+  // Border class for cards - animated for Bloom theme
+  const cardBorder = theme === 'garden' ? 'bloom-border' : 'border border-white/10';
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <div 
+      className="min-h-screen relative"
+      style={cursor ? { cursor: `url(${cursor}), auto` } : {}}
+    >
+      {/* background image for Nova theme */}
+      {background && (
+        <div 
+          className="fixed inset-0 z-0"
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+      )}
+      
+      <div className="relative z-10">
+        <Navbar />
       
       <div className="max-w-7xl mx-auto p-6">
         {/* theme switcher - DEMO ONLY */}
-        <div className="bg-white rounded-xl shadow-md p-4 mb-6">
+        <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-md p-4 mb-6 ${cardBorder}`}>
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <p className="text-sm font-semibold text-gray-700">Demo: Switch Themes</p>
@@ -80,99 +100,157 @@ const Dashboard = () => {
         </div>
 
         {/* welcome banner */}
-        <div className={`${colors.gradient} text-white rounded-2xl shadow-xl p-8 mb-6 transition-all duration-500`}>
-          <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.name}!</h1>
-          <p className="text-lg opacity-90">Your AI buddy {agentName} is here to help you Rize Up!</p>
+        <div className={`${colors.gradient} text-white rounded-2xl shadow-xl p-8 mb-6 transition-all duration-500 ${font || ''} backdrop-blur-sm`}>
+          <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.username}!</h1>
+          <p className="text-lg opacity-90">{agentName} is here to help you Rize Up!</p>
         </div>
 
         {/* stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {/* ur balaance */}
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all">
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 hover:shadow-xl transition-all ${cardBorder}`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-500 font-medium">Balance</p>
+              <p className="text-sm text-gray-200 font-medium">Balance</p>
               <div className={`w-10 h-10 ${colors.primary} rounded-full flex items-center justify-center text-white font-bold`}>
                 $
               </div>
             </div>
-            <p className="text-3xl font-bold text-gray-800">{formatCurrency(user?.balance || 0)}</p>
-            <p className="text-xs text-gray-400 mt-1">Available to spend</p>
+            <p className="text-3xl font-bold text-white">{formatCurrency(user?.balance || 0)}</p>
+            <p className="text-xs text-gray-300 mt-1">Available to spend</p>
           </div>
 
           {/* monthly spending */}
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all">
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 hover:shadow-xl transition-all ${cardBorder}`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-500 font-medium">This Month</p>
-              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold">
+              <p className="text-sm text-gray-200 font-medium">This Month</p>
+              <div className="w-10 h-10 bg-red-500/80 rounded-full flex items-center justify-center text-white font-bold">
                 -
               </div>
             </div>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-3xl font-bold text-white">
               {stats ? formatCurrency(stats.totalExpenses) : formatCurrency(0)}
             </p>
-            <p className="text-xs text-gray-400 mt-1">Total expenses</p>
+            <p className="text-xs text-gray-300 mt-1">Total expenses</p>
           </div>
 
           {/* ur earned cashback */}
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all">
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 hover:shadow-xl transition-all ${cardBorder}`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-500 font-medium">Cashback</p>
-              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
+              <p className="text-sm text-gray-200 font-medium">Cashback</p>
+              <div className="w-10 h-10 bg-green-500/80 rounded-full flex items-center justify-center text-white font-bold">
                 +
               </div>
             </div>
-            <p className="text-3xl font-bold text-green-600">{formatCurrency(cashbackTotal)}</p>
-            <p className="text-xs text-gray-400 mt-1">Earned this month</p>
+            <p className="text-3xl font-bold text-green-400">{formatCurrency(cashbackTotal)}</p>
+            <p className="text-xs text-gray-300 mt-1">Earned this month</p>
           </div>
         </div>
 
-        {/* qwuick actions */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button
-              onClick={() => navigate('/transactions')}
-              className={`p-4 border-2 ${colors.border} rounded-xl hover:shadow-lg transition-all text-center`}
-            >
-              <div className={`w-12 h-12 ${colors.primary} rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold`}>
-                T
+        {/* Budget Overview & Stocks Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* Budget Overview */}
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 ${cardBorder}`}>
+            <h2 className="text-xl font-bold text-white mb-4">Budget Overview</h2>
+            <div className="space-y-4">
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-200">Food & Dining</span>
+                  <span className="text-sm text-gray-300">$320 / $500</span>
+                </div>
+                <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className={`${colors.primary} h-2 rounded-full`} style={{ width: '64%' }}></div>
+                </div>
               </div>
-              <p className="text-sm font-semibold text-gray-700">Transactions</p>
-            </button>
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-200">Entertainment</span>
+                  <span className="text-sm text-gray-300">$150 / $200</span>
+                </div>
+                <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className={`${colors.primary} h-2 rounded-full`} style={{ width: '75%' }}></div>
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-200">Shopping</span>
+                  <span className="text-sm text-gray-300">$280 / $400</span>
+                </div>
+                <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className={`${colors.primary} h-2 rounded-full`} style={{ width: '70%' }}></div>
+                </div>
+              </div>
+            </div>
             <button
               onClick={() => navigate('/budgets')}
-              className={`p-4 border-2 ${colors.border} rounded-xl hover:shadow-lg transition-all text-center`}
+              className="mt-4 w-full bg-white/10 hover:bg-white/20 text-white py-2 rounded-lg transition-all text-sm font-medium"
             >
-              <div className={`w-12 h-12 ${colors.primary} rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold`}>
-                B
-              </div>
-              <p className="text-sm font-semibold text-gray-700">Budgets</p>
+              View All Budgets
             </button>
-            <button
-              onClick={() => navigate('/cashback')}
-              className={`p-4 border-2 ${colors.border} rounded-xl hover:shadow-lg transition-all text-center`}
-            >
-              <div className={`w-12 h-12 ${colors.primary} rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold`}>
-                R
+          </div>
+
+          {/* Stocks Watchlist */}
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 ${cardBorder}`}>
+            <h2 className="text-xl font-bold text-white mb-4">Stocks Watchlist</h2>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-blue-500/80 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                    AAPL
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">Apple Inc.</p>
+                    <p className="text-gray-300 text-xs">$178.45</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-green-400 font-bold text-sm">+2.3%</p>
+                  <p className="text-gray-300 text-xs">+$4.12</p>
+                </div>
               </div>
-              <p className="text-sm font-semibold text-gray-700">Rewards</p>
-            </button>
-            <button
-              className={`p-4 border-2 ${colors.border} rounded-xl hover:shadow-lg transition-all text-center`}
-            >
-              <div className={`w-12 h-12 ${colors.primary} rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold`}>
-                AI
+              <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-500/80 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                    TSLA
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">Tesla Inc.</p>
+                    <p className="text-gray-300 text-xs">$245.67</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-red-400 font-bold text-sm">-1.2%</p>
+                  <p className="text-gray-300 text-xs">-$2.98</p>
+                </div>
               </div>
-              <p className="text-sm font-semibold text-gray-700">Chat with {agentName}</p>
+              <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-orange-500/80 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                    BTC
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">Bitcoin</p>
+                    <p className="text-gray-300 text-xs">$43,250</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-green-400 font-bold text-sm">+5.7%</p>
+                  <p className="text-gray-300 text-xs">+$2,340</p>
+                </div>
+              </div>
+            </div>
+            <button
+              className="mt-4 w-full bg-white/10 hover:bg-white/20 text-white py-2 rounded-lg transition-all text-sm font-medium"
+            >
+              Manage Watchlist
             </button>
           </div>
         </div>
 
         {/*  recent transactions */}
         {recentTransactions.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 ${cardBorder}`}>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Recent Activity</h2>
+              <h2 className="text-xl font-bold text-white">Recent Activity</h2>
               <button
                 onClick={() => navigate('/transactions')}
                 className={`${colors.text} hover:underline text-sm font-semibold`}
@@ -200,6 +278,7 @@ const Dashboard = () => {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

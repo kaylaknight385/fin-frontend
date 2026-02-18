@@ -167,9 +167,22 @@ const Signup = () => {
         {step === 2 && (
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* theme preview  */}
-            <div className={`bg-gradient-to-br ${currentThemePreview.gradient} text-white rounded-xl p-6 mb-4 transition-all duration-500`}>
+            <div className={`bg-gradient-to-br ${currentThemePreview.gradient} text-white rounded-xl p-6 mb-4 transition-all duration-500 ${currentThemePreview.font || ''} relative overflow-hidden`}>
+              {/* Background for Nova theme */}
+              {currentThemePreview.id === 'cosmic' && currentThemePreview.background && (
+                <div 
+                  className="absolute inset-0 opacity-30"
+                  style={{
+                    backgroundImage: `url(${currentThemePreview.background})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
+              )}
+              
+              <div className="relative z-10">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-lg rounded-full flex items-center justify-center">
+                <div className={`w-16 h-16 ${currentThemePreview.id === 'cosmic' ? 'bg-amber-400/30' : 'bg-white/20'} backdrop-blur-lg rounded-full flex items-center justify-center`}>
                   <span className="text-2xl font-bold">{currentThemePreview.name.charAt(0)}</span>
                 </div>
                 <div>
@@ -201,6 +214,7 @@ const Signup = () => {
                   <p className="text-xs opacity-75">Saved</p>
                   <p className="text-lg font-bold">$24</p>
                 </div>
+              </div>
               </div>
             </div>
 

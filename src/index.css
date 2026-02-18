@@ -6,8 +6,54 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Mercy Christole';
+  src: url('./assets/Mercy Christole.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Tropi Land';
+  src: url('./assets/Tropi Land - (Demo) hanscostudio.com.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .font-play-pretend {
   font-family: 'Play Pretend', cursive;
+  font-size: 2.2rem;
+}
+
+.font-mercy-christole {
+  font-family: 'Mercy Christole', cursive;
+  font-size: 1.26rem;
+}
+
+.font-tropi-land {
+  font-family: 'Tropi Land', cursive;
+  font-size: 1.5rem; /* */
+}
+
+/* Animated gradient border for Bloom theme */
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bloom-border {
+  border: 2px solid transparent;
+  background: linear-gradient(#fce7f3, #fce7f3) padding-box,
+              linear-gradient(90deg, #22c55e, #84cc16, #22c55e) border-box;
+  background-size: 200% 200%;
+  animation: gradient-rotate 3s ease infinite;
 }
 
 /* custom styles here */
