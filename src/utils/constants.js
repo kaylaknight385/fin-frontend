@@ -1,3 +1,10 @@
+import novaGif from '../assets/nova.gal.gif';
+import bloomGif from '../assets/bloom-bg.gif';
+import pixelGif from '../assets/pixel-bg.gif';
+import novaCursor from '../assets/sym455.cur';
+import bloomCursor from '../assets/nat793.cur';
+import pixelCursor from '../assets/mec440.cur';
+
 export const CATEGORIES = [
     {value: 'food', label: 'Food'},
     {value: 'entertainment', label: 'Entertainment'},
@@ -20,9 +27,9 @@ export const THEMES = [
         agent: 'Nova',
         description: 'Save money in the stars! This theme holds the galaxy with starry skies, floating planets, and deep space vibes perfect for dreamers.',
         gradient: 'from-indigo-950 via-purple-900 to-blue-950',
-        background: '/src/assets/nova.gal.gif',
+        background: novaGif,
         font: 'font-mercy-christole',
-        cursor: '/src/assets/sym455.cur'
+        cursor: novaCursor
     }, 
     {
         id: 'garden',
@@ -30,9 +37,9 @@ export const THEMES = [
         agent: 'Bloom',
         description: 'Plant the seed for money growth! This theme holds earthy vibes, leafy greens, and cozy nature-inspired aesthetics that feel like a breath of fresh air for your money.',
         gradient: 'from-green-600 to-brown-600',
-        background: '/src/assets/bloom-bg.gif',
+        background: bloomGif,
         font: 'font-melt-swashes',
-        cursor: '/src/assets/nat793.cur'
+        cursor: bloomCursor
     },
     {
         id:'neon',
@@ -40,8 +47,8 @@ export const THEMES = [
         agent: 'Pixel',
         description: 'Level up your funds with retro 8bit graphics, glowing arcade lights, and gamer energy that pops off the screen.',
         gradient: 'from-purple-600 to-pink-600',
-        background: '/src/assets/pixel-bg.gif',
+        background: pixelGif,
         font: 'font-04b',
-        cursor: '/src/assets/mec440.cur'
+        cursor: pixelCursor
     }
 ];

@@ -29,7 +29,10 @@ api.interceptors.response.use(
             //token expired or invalid
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            window.location.href = '/login';
+            // Use navigate instead of window.location for SPA routing
+            if (typeof window !== 'undefined') {
+                window.location.replace('/login');
+            }
         }
         return Promise.reject(error);
     }
