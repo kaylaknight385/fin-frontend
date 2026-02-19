@@ -103,6 +103,8 @@ const Transactions = () => {
         fetchTransactions();
       } catch (error) {
         console.error('Error deleting transaction:', error);
+        console.error('Backend error details:', error.response?.data);
+        alert(error.response?.data?.error || 'Error deleting transaction. Check console for details.');
       }
     }
   };

@@ -112,32 +112,32 @@ const AIChat = () => {
         </div>
 
         {/* the chat */}
-        <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-6 mb-6 h-96 overflow-y-auto`}>
+        <div className={`${colors.cardBg} backdrop-blur-md rounded-xl shadow-lg p-8 mb-6 h-[600px] overflow-y-auto`}>
           {messages.length === 0 ? (
             <div className={`text-center ${colors.cardText} mt-20`}>
-              <p className="text-lg mb-2">Start chatting with {agentName}</p>
-              <p className="text-sm opacity-70">Ask about your budget, savings, or money tips</p>
+              <p className="text-xl mb-3">Start chatting with {agentName}</p>
+              <p className="text-base opacity-70">Ask about your budget, savings, or money tips</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-xs md:max-w-md px-4 py-3 rounded-2xl ${
+                  <div className={`max-w-lg md:max-w-2xl px-6 py-4 rounded-2xl ${
                     msg.isUser 
                       ? `${colors.primary} text-white` 
                       : `bg-white/10 ${colors.cardText}`
                   }`}>
-                    <p className="text-sm">{msg.text}</p>
+                    <p className="text-base leading-relaxed">{msg.text}</p>
                   </div>
                 </div>
               ))}
               {loading && (
                 <div className="flex justify-start">
-                  <div className={`bg-white/10 px-4 py-3 rounded-2xl`}>
+                  <div className={`bg-white/10 px-6 py-4 rounded-2xl`}>
                     <div className="flex gap-2">
-                      <div className={`w-2 h-2 ${colors.primary} rounded-full animate-bounce`}></div>
-                      <div className={`w-2 h-2 ${colors.primary} rounded-full animate-bounce`} style={{ animationDelay: '0.1s' }}></div>
-                      <div className={`w-2 h-2 ${colors.primary} rounded-full animate-bounce`} style={{ animationDelay: '0.2s' }}></div>
+                      <div className={`w-3 h-3 ${colors.primary} rounded-full animate-bounce`}></div>
+                      <div className={`w-3 h-3 ${colors.primary} rounded-full animate-bounce`} style={{ animationDelay: '0.1s' }}></div>
+                      <div className={`w-3 h-3 ${colors.primary} rounded-full animate-bounce`} style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -148,19 +148,19 @@ const AIChat = () => {
         </div>
 
         {/* user input */}
-        <form onSubmit={handleSubmit} className="flex gap-3">
+        <form onSubmit={handleSubmit} className="flex gap-4">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={`Ask ${agentName} anything...`}
-            className={`flex-1 px-4 py-3 ${colors.cardBg} ${colors.cardText} backdrop-blur-md border border-white/20 rounded-lg focus:outline-none focus:border-white/40 placeholder:text-gray-400`}
+            className={`flex-1 px-6 py-4 text-base ${colors.cardBg} ${colors.cardText} backdrop-blur-md border border-white/20 rounded-lg focus:outline-none focus:border-white/40 placeholder:text-gray-400`}
             disabled={loading}
           />
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className={`${colors.primary} text-white px-6 py-3 rounded-lg font-semibold ${colors.hover} disabled:opacity-50 transition-all`}
+            className={`${colors.primary} text-white px-8 py-4 text-base rounded-lg font-semibold ${colors.hover} disabled:opacity-50 transition-all`}
           >
             {loading ? 'Sending...' : 'Send'}
           </button>

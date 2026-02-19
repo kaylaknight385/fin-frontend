@@ -21,6 +21,14 @@
 }
 
 @font-face {
+  font-family: 'Melt Swashes';
+  src: url('./assets/Melt-Swashes.otf') format('opentype'),
+       url('./assets/Melt-Swashes.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: '04B_30';
   src: url('./assets/04B_30__.TTF') format('truetype');
   font-weight: normal;
@@ -42,12 +50,19 @@
   font-size: 1.8rem; /* Increased from 1.5rem for better readability */
 }
 
+.font-melt-swashes {
+  font-family: 'Melt Swashes', cursive;
+  font-size: 1.5rem;
+  color: #065f46; /* Dark green for readability */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
 .font-04b {
   font-family: '04B_30', monospace;
   font-size: 1rem;
 }
 
-/* Animated gradient border for Bloom theme */
+/* animated gradient border for Bloom theme */
 @keyframes gradient-rotate {
   0% {
     background-position: 0% 50%;

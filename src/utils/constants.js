@@ -31,7 +31,7 @@ export const THEMES = [
         description: 'Plant the seed for money growth! This theme holds earthy vibes, leafy greens, and cozy nature-inspired aesthetics that feel like a breath of fresh air for your money.',
         gradient: 'from-green-600 to-brown-600',
         background: '/src/assets/bloom-bg.gif',
-        font: 'font-tropi-land',
+        font: 'font-melt-swashes',
         cursor: '/src/assets/nat793.cur'
     },
     {

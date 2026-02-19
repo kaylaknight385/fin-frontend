@@ -116,9 +116,9 @@ const Dashboard = () => {
         </div>
 
         {/* welcome banner */}
-        <div className={`${colors.gradient} text-white rounded-2xl shadow-xl p-8 mb-6 transition-all duration-500 ${font || ''} backdrop-blur-sm`}>
-          <h1 className="text-5xl font-bold mb-2">Welcome back, {user?.username}!</h1>
-          <p className="text-4lg opacity-90">{agentName} is here to help you Rize Up!</p>
+        <div className={`${colors.gradient} rounded-2xl shadow-xl p-8 mb-6 transition-all duration-500 ${font || ''} backdrop-blur-sm`}>
+          <h1 className="text-5xl font-bold mb-2 text-white">Welcome back, {user?.username}!</h1>
+          <p className="text-4lg opacity-90 text-white">{agentName} is here to help you Rize Up!</p>
         </div>
 
         {/* stats */}

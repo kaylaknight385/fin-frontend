@@ -16,15 +16,15 @@ const themeColors = {
         cardText: 'text-white'
   },
   garden: {
-    primary: 'bg-green-500',
-    secondary: 'bg-lime-500',
+    primary: 'bg-green-700',
+    secondary: 'bg-lime-600',
     accent: 'bg-yellow-400',
-    gradient: 'bg-gradient-to-br from-green-500 to-lime-500',
-    text: 'text-green-600',
-    border: 'border-green-500',
-    hover: 'hover:bg-green-600',
+    gradient: 'bg-gradient-to-br from-green-700 to-lime-600',
+    text: 'text-green-800',
+    border: 'border-green-700',
+    hover: 'hover:bg-green-800',
     cardBg: 'bg-pink-300/95',
-    cardText: 'text-green-800'
+    cardText: 'text-green-900'
   },
   neon: {
     primary: 'bg-pink-500',
