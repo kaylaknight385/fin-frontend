@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { login as loginService } from '../services/authService';
+import bgVideo from '../assets/RizeUp-bg.mp4';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const Login = () => {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <source src="/src/assets/RizeUp-bg.mp4" type="video/mp4" />
+        <source src={bgVideo} type="video/mp4" />
       </video>
       
       {/* Overlay */}

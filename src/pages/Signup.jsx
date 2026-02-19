@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { signup as signupService } from '../services/authService';
 import { THEMES } from '../utils/constants';
+import bgVideo from '../assets/RizeUp-bg.mp4';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const Signup = () => {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <source src="/src/assets/RizeUp-bg.mp4" type="video/mp4" />
+        <source src={bgVideo} type="video/mp4" />
       </video>
       
       {/* little overlay */}
